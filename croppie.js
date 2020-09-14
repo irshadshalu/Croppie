@@ -1091,7 +1091,11 @@
             _setZoomerVal.call(self, scale < zoomer.min ? zoomer.min : zoomer.max);
         }
         else if (initial) {
-            defaultInitialZoom = Math.max((boundaryData.width / imgData.width), (boundaryData.height / imgData.height));
+            if(self.options.fitToBoundary) {
+                defaultInitialZoom = Math.min((boundaryData.width / imgData.width), (boundaryData.height / imgData.height));
+            } else {
+                defaultInitialZoom = Math.max((boundaryData.width / imgData.width), (boundaryData.height / imgData.height));
+            }
             initialZoom = self.data.boundZoom !== null ? self.data.boundZoom : defaultInitialZoom;
             _setZoomerVal.call(self, initialZoom);
         }
@@ -1593,6 +1597,7 @@
         enforceBoundary: true,
         enableOrientation: false,
         enableKeyMovement: true,
+        fitToBoundary: false,
         update: function () { }
     };
 
